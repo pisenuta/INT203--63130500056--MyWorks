@@ -1,26 +1,24 @@
 <script setup>
-import {reactive, toRef, toRefs} from 'vue'
+import { ref } from 'vue'
 console.clear()
-const product = reactive({
-    productId: 1001, 
-    productName: 'Pepsi', 
-    productPrice: 20, 
-    productDesc: 'fresh drink'
-})
-const price = toRef(product, "productPrice")
-console.log(price.value);
-price.value += 10
-console.log(product);
-
-const {productId,productDesc} = toRefs(product)
-console.log(productId.value);
-console.log(productDesc.value);
+const base = ref(4)
+const height = ref(8)
+let result = ref(1)
+const computeArea = () => {
+  console.log('compute area working')
+  result.value = (1 / 2) * base.value * height.value
+  console.log(result.value)
+}
 </script>
 
 <template>
+  <p>Base: {{ base }}</p>
+  <button @click="base++">Add 1 to Base</button>
+  <p>Height: {{ height }}</p>
+  <button @click="height++">Add 1 to Height</button>
 
+  <p>Area Result: {{ result }}</p>
+  <button @click="computeArea">Compute Area</button>
 </template>
 
-<style>
-
-</style>
+<style></style>

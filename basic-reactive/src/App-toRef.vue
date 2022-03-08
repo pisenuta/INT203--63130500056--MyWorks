@@ -1,22 +1,23 @@
 <script setup>
-import { ref } from 'vue'
+import { reactive, toRef, toRefs } from 'vue'
 console.clear()
-const counter = ref(1)
-//let counter = 1 //มีการแก้ไข setTimeout เลย ใช้ const ไม่ได้
-//setTimeout(() => console.log(++counter,3000)) //ใส่ function
-setInterval(() => console.log(++counter.value,3000))
-//ถ้าใส่ .value ค่าใน template ที่อ้างอิงจาก counter จะเปลี่ยนด้วย
-// function stopInterval() {
-//   clearInterval(intervalId)
-// }
-const stopInterval = () => clearInterval(intervalId)
+const product = reactive({
+  productId: 1001,
+  productName: 'Pepsi',
+  productPrice: 20,
+  productDesc: 'fresh drink'
+})
+const price = toRef(product, 'productPrice')
+console.log(price.value)
+price.value += 10
+console.log(product)
+const { productId, productDesc } = toRefs(product)
+console.log(productId.value)
+console.log(productDesc.value)
 </script>
 
 <template>
-<p>Counter: {{ counter }}</p>
-<button @click="stopInterval">Stop Counter</button>
+
 </template>
 
-<style>
-
-</style>
+<style></style>
