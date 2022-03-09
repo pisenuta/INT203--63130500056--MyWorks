@@ -1,16 +1,21 @@
 <script setup>
 import { ref } from 'vue';
-import BaseButton from './components/BaseButtonV2.vue'
-const uText = ref('type your text here !')
-const uColor = ref('#000000')
+import IconGalaAirplay from './components/icon/IconGalaAirplay.vue'
+import ListItems from './components/ListItems.vue'
+const projects = [
+  {section: 1, group: 1, title: 'Bingo'},
+  {section: 2, group: 1, title: 'Tic Tac Toe'},
+  {section: 3, group: 1, title: 'Matching Game'}
+]
+const currentStatus =ref('NONE')
+const updateStatus = (status) => (currentStatus.value = status)
 </script>
 
 <template>
   <div>
-    <div>Your Text: {{uText}}<input type="text" v-model="uText"/></div>
-
-    <div>Your Color: {{uColor}}<input type="color" v-model="uColor"/></div>
-    <BaseButton :yourText = "uText" :yourColor = "uColor"/>
+    <IconGalaAirplay/> Home
+    <ListItems :items="projects" @confirm="updateStatus"/>
+    Current Status: {{currentStatus}}
   </div>
 </template>
 
