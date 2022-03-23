@@ -54,30 +54,36 @@
     editingNote.value = editNote
     console.log(editingNote.value)
   }
-  const modifyNote = async (editingNote) =>{
-    const res = await fetch(`http://localhost:5000/notes/${editingNote.id}`,{
+  const modifyNote = async (replaceNote) =>{
+    const res = await fetch(`http://localhost:5000/notes/${replaceNote.id}`,{
       method: 'PUT',
       headers:{
         'content-type': 'application/json'
       },
       body: JSON.stringify({
-        noteDetail: editingNote.noteDetail
+        noteDetail: replaceNote.noteDetail
       })
     })
 
     if(res.status === 200){
       const modifyNote = await res.json()
-      notes.value = notes.value.map((note) => note.id === modifyNote.id? {...note,noteDetail:modifyNote.noteDetail}: note)
+      notes.value = notes.value.map((note) => 
+        note.id === modifyNote.id? {...note,noteDetail:modifyNote.noteDetail}: note)
       console.log('edited successfully')
     } else {
       console.log('error, cannot edit');
-    }
+    }  
+    editingNote.value = {}
   }
+
 </script>
 
 <template>
   <div>
-    <CreateEditNote @createNote="createNewNote" :currentNote="editingNote" @updateNote="modifyNote"/>
+    <CreateEditNote 
+    @createNote="createNewNote" 
+    :currentNote="editingNote" 
+    @updateNote="modifyNote"/>
     <NoteList 
       :noteList="notes" 
       @deleteNote="removeNote" 
